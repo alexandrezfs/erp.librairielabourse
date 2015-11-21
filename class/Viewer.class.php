@@ -1,55 +1,61 @@
 <?php
 
-  	require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/session.autoload.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/db.autoload.php");
-  	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Transaction.class.php");
-  	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Magasin.class.php");
-  	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/MobileDetect.class.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/session.autoload.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/db.autoload.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Transaction.class.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Magasin.class.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/class/MobileDetect.class.php");
 
-	class Viewer{
+class Viewer
+{
 
-		private $date;
-		private $transaction;
-		private $globals;
-		private $magasin;
-		private $magasinObj;
-		private $MobileDetect;
-		private $totalChiffreJournee = 0;
-		private $totalProduits = 0;
+    private $date;
+    private $transaction;
+    private $globals;
+    private $magasin;
+    private $magasinObj;
+    private $MobileDetect;
+    private $totalChiffreJournee = 0;
+    private $totalProduits = 0;
 
-		//SPE
-		private $totalChiffreJourneeLYON = 0;
-		private $totalChiffreJourneePARIS = 0;
-		private $totalProduitsLYON = 0;
-		private $totalProduitsPARIS = 0;
-		//END SPE
+    //SPE
+    private $totalChiffreJourneeLYON = 0;
+    private $totalChiffreJourneePARIS = 0;
+    private $totalProduitsLYON = 0;
+    private $totalProduitsPARIS = 0;
+    private $orderAverageLYON = 0;
+    private $orderAveragePARIS = 0;
+    private $orderAverageTotal = 0;
 
-		function Viewer()
-		{
-		  $this->MobileDetect = new Mobile_Detect();
+    //END SPE
 
-		  $this->transaction = new Transaction();
-		  $this->magasinObj = new Magasin();
-		  
-		  $this->transaction->setDate(date("d/m/Y"));
-		  $this->globals = $this->transaction->getGlobalsWithDATE();
+    function Viewer()
+    {
+        $this->MobileDetect = new Mobile_Detect();
 
-		  $this->date = date("d/m/Y");
-		}
+        $this->transaction = new Transaction();
+        $this->magasinObj = new Magasin();
 
-		public function getNbProduits()
-		{
-			$query = getDb()->prepare("SELECT id_table FROM produits_encaisses
+        $this->transaction->setDate(date("d/m/Y"));
+        $this->globals = $this->transaction->getGlobalsWithDATE();
+
+        $this->date = date("d/m/Y");
+    }
+
+    public function getNbProduits()
+    {
+        $query = getDb()->prepare("SELECT id_table FROM produits_encaisses
 				WHERE date = ? AND magasin = ?");
-			$query->execute(array($this->date, $this->magasin));
+        $query->execute(array($this->date, $this->magasin));
 
-			return $query->rowCount();
-		}
+        return $query->rowCount();
+    }
 
-		public function getPrintedView()
-		{
-          if(count($this->globals) == 0){echo '<h4>Aucun chiffre pour le moment</h4>';}
-          else{
+    public function getPrintedView()
+    {
+        if (count($this->globals) == 0) {
+            echo '<h4>Aucun chiffre pour le moment</h4>';
+        } else {
 
             echo '
 
@@ -69,44 +75,44 @@
 
             foreach ($this->globals as $key => $value) {
 
-              $this->magasin = $value['magasin'];
-              $this->magasinObj->setNom($this->magasin);
+                $this->magasin = $value['magasin'];
+                $this->magasinObj->setNom($this->magasin);
 
-              $rank = $key + 1;
+                $rank = $key + 1;
 
-              echo '<tr>';
-	            echo '<td><strong>#' . $rank . '</strong> ' .  $value['magasin'] . '</td>';
-                echo '<td><strong>' .  $value['chiffre_journee'] . '€</strong></td>';
+                echo '<tr>';
+                echo '<td><strong>#' . $rank . '</strong> ' . $value['magasin'] . '</td>';
+                echo '<td><strong>' . $value['chiffre_journee'] . '€</strong></td>';
                 echo '<td>' . $this->getNbProduits() . '</td>';
 
                 //making totals
                 $this->totalChiffreJournee += $value['chiffre_journee'];
                 $this->totalProduits += $this->getNbProduits();
 
-                	//SPE
-                	if ($this->magasin == 'Cine Corner') {
-                		$this->totalChiffreJourneePARIS += $value['chiffre_journee']; 
-                		$this->totalProduitsPARIS += $this->getNbProduits();
-                	}
+                //SPE
+                if ($this->magasin == 'Cine Corner') {
+                    $this->totalChiffreJourneePARIS += $value['chiffre_journee'];
+                    $this->totalProduitsPARIS += $this->getNbProduits();
+                }
 
-                	if ($this->magasin == 'Principale Annexe' 
-                		|| $this->magasin == 'Principale'
-                		|| $this->magasin == 'Principale Reception'
-                		|| $this->magasin == 'Bourse Bis'
-                		|| $this->magasin == 'Serlin') {
-                		
-                		$this->totalChiffreJourneeLYON += $value['chiffre_journee']; 
-                		$this->totalProduitsLYON += $this->getNbProduits();
-                	}
-                	//END SPE
+                if ($this->magasin == 'Principale Annexe'
+                    || $this->magasin == 'Principale'
+                    || $this->magasin == 'Principale Reception'
+                    || $this->magasin == 'Bourse Bis'
+                    || $this->magasin == 'Serlin'
+                ) {
+
+                    $this->totalChiffreJourneeLYON += $value['chiffre_journee'];
+                    $this->totalProduitsLYON += $this->getNbProduits();
+                }
+                //END SPE
                 //end making totals
 
-                if($this->getNbProduits() != 0){
-                	$moyenne = $value['chiffre_journee'] / $this->getNbProduits();
+                if ($this->getNbProduits() != 0) {
+                    $moyenne = $value['chiffre_journee'] / $this->getNbProduits();
+                } else {
+                    $moyenne = 0;
                 }
-               	else{
-               		$moyenne = 0;
-               	}
 
                 echo '<td>' . number_format($moyenne, 2, '.', ' ') . ' €</td>';
 
@@ -114,76 +120,88 @@
                 $this->transaction->setMagasin($this->magasin);
                 $orderAverage = $this->transaction->getOrderAverageByDateAndStore();
 
+                //SPE
+                if ($this->magasin != "Cine Corner") {
+                    $this->orderAverageLYON += $orderAverage;
+                } else {
+                    $this->orderAveragePARIS += $orderAverage;
+                }
+
+                $this->orderAverageTotal += $orderAverage;
+                //END SPE
+
                 echo '<td style="color:red;">' . number_format($orderAverage, 2, '.', ' ') . ' €</td>';
 
                 echo '<td><a href="rea.php?date=' . $value['date'] . '&magasin=' . $value['magasin'] . '"><button class="btn">Réassort</button></a></td>';
-                
-              echo '</tr>';
+
+                echo '</tr>';
 
             }
 
-              echo '<tr>';
-                echo '<td>> LYON</td>';
-                echo '<td><strong>' . number_format($this->totalChiffreJourneeLYON, 2, '.', ' ') . '€</strong></td>';
-                echo '<td><strong>' . $this->totalProduitsLYON . '</strong></td>';
+            //SPE
+            $this->orderAverageLYON /= count($this->globals) - 1;
+            $this->orderAverageTotal /= count($this->globals);
+            //END SPE
 
-                if($this->totalProduitsLYON != 0){
-                	$moyenne = $this->totalChiffreJourneeLYON / $this->totalProduitsLYON;
-                }
-               	else{
-               		$moyenne = 0;
-               	}
+            echo '<tr>';
+            echo '<td>> LYON</td>';
+            echo '<td><strong>' . number_format($this->totalChiffreJourneeLYON, 2, '.', ' ') . '€</strong></td>';
+            echo '<td><strong>' . $this->totalProduitsLYON . '</strong></td>';
 
-                echo '<td><strong>' . number_format($moyenne, 2, '.', ' ') . '€</strong></td>';
-                echo '<td>X</td>';
-                echo '<td>X</td>';
+            if ($this->totalProduitsLYON != 0) {
+                $moyenne = $this->totalChiffreJourneeLYON / $this->totalProduitsLYON;
+            } else {
+                $moyenne = 0;
+            }
 
-              echo '</tr>';
+            echo '<td><strong>' . number_format($moyenne, 2, '.', ' ') . '€</strong></td>';
+            echo '<td style="color:red;"><strong>' . number_format($this->orderAverageLYON, 2, '.', ' ') . ' €</strong></td>';
+            echo '<td>X</td>';
 
-              echo '<tr>';
-                echo '<td>> PARIS</td>';
-                echo '<td><strong>' . number_format($this->totalChiffreJourneePARIS, 2, '.', ' ') . '€</strong></td>';
-                echo '<td><strong>' . $this->totalProduitsPARIS . '</strong></td>';
+            echo '</tr>';
 
-                if($this->totalProduitsPARIS != 0){
-                	$moyenne = $this->totalChiffreJourneePARIS / $this->totalProduitsPARIS;
-                }
-               	else{
-               		$moyenne = 0;
-               	}
+            echo '<tr>';
+            echo '<td>> PARIS</td>';
+            echo '<td><strong>' . number_format($this->totalChiffreJourneePARIS, 2, '.', ' ') . ' €</strong></td>';
+            echo '<td><strong>' . $this->totalProduitsPARIS . '</strong></td>';
 
-                echo '<td><strong>' . number_format($moyenne, 2, '.', ' ') . '€</strong></td>';
-                echo '<td>X</td>';
-                echo '<td>X</td>';
+            if ($this->totalProduitsPARIS != 0) {
+                $moyenne = $this->totalChiffreJourneePARIS / $this->totalProduitsPARIS;
+            } else {
+                $moyenne = 0;
+            }
 
-              echo '</tr>';
+            echo '<td><strong>' . number_format($moyenne, 2, '.', ' ') . '€</strong></td>';
+            echo '<td><strong style="color:red;">' . number_format($this->orderAveragePARIS, 2, '.', ' ') . ' €</strong></td>';
+            echo '<td>X</td>';
 
-              echo '<tr>';
-                echo '<td><strong>TOTAUX</strong></td>';
-                echo '<td><strong>' . number_format($this->totalChiffreJournee, 2, '.', ' ') . '€</strong></td>';
-                echo '<td><strong>' . $this->totalProduits . '</strong></td>';
+            echo '</tr>';
 
-                if($this->totalProduits != 0){
-                	$moyenne = $this->totalChiffreJournee / $this->totalProduits;
-                }
-               	else{
-               		$moyenne = 0;
-               	}
+            echo '<tr>';
+            echo '<td><strong>TOTAUX</strong></td>';
+            echo '<td><strong>' . number_format($this->totalChiffreJournee, 2, '.', ' ') . '€</strong></td>';
+            echo '<td><strong>' . $this->totalProduits . '</strong></td>';
 
-                echo '<td><strong>' . number_format($moyenne, 2, '.', ' ') . '€</strong></td>';
-                echo '<td>X</td>';
-                echo '<td>X</td>';
+            if ($this->totalProduits != 0) {
+                $moyenne = $this->totalChiffreJournee / $this->totalProduits;
+            } else {
+                $moyenne = 0;
+            }
 
-              echo '</tr>';
+            echo '<td><strong>' . number_format($moyenne, 2, '.', ' ') . '€</strong></td>';
+            echo '<td style="color:red;"><strong>' . number_format($this->orderAverageTotal, 2, '.', ' ') . ' €</strong></td>';
+            echo '<td>X</td>';
+
+            echo '</tr>';
 
             echo '
               </tbody>
 
             </table>';
 
-            if(!$this->MobileDetect->isMobile()){
+            if (!$this->MobileDetect->isMobile()) {
 
-	            echo '
+                echo '
 				<table class="table table-striped table-bordered small-text">
 	              <thead>
 	                <tr>
@@ -199,11 +217,11 @@
 	              <tbody>
 	            ';
 
-					$this->transaction->setDate(date("d/m/Y"));
-					$products = $this->transaction->getProductsByDATE();
+                $this->transaction->setDate(date("d/m/Y"));
+                $products = $this->transaction->getProductsByDATE();
 
-					foreach ($products as $subKey => $subValue) {
-						echo '
+                foreach ($products as $subKey => $subValue) {
+                    echo '
 						<tr>
 							<td><strong>' . $subValue['magasin'] . '</strong></td>
 							<td>' . $subValue['heure'] . '</td>
@@ -214,23 +232,24 @@
 							<td>' . $subValue['edition'] . '</td>
 						</tr>
 						';
-					}
+                }
 
-	            echo '
+                echo '
 	            	</tbody>
 
 	            </table>
 	            ';
             }
 
-          }
+        }
 
-		}
+    }
 
-		public function getMobilePrintedView()
-		{
-          if(count($this->globals) == 0){echo '<h4>Aucun chiffre pour le moment</h4>';}
-          else{
+    public function getMobilePrintedView()
+    {
+        if (count($this->globals) == 0) {
+            echo '<h4>Aucun chiffre pour le moment</h4>';
+        } else {
 
             echo '
 
@@ -248,12 +267,12 @@
 
             foreach ($this->globals as $key => $value) {
 
-              $this->magasin = $value['magasin'];
-              $this->magasinObj->setNom($this->magasin);
+                $this->magasin = $value['magasin'];
+                $this->magasinObj->setNom($this->magasin);
 
-              echo '<tr>';
-                echo '<td>' .  $value['magasin'] . '</td>';
-                echo '<td><strong>' .  $value['chiffre_journee'] . '€</strong></td>';
+                echo '<tr>';
+                echo '<td>' . $value['magasin'] . '</td>';
+                echo '<td><strong>' . $value['chiffre_journee'] . '€</strong></td>';
                 echo '<td>' . $this->getNbProduits() . '</td>';
 
                 //making totals
@@ -261,138 +280,132 @@
                 $this->totalProduits += $this->getNbProduits();
                 //end making totals
 
-                if($this->getNbProduits() != 0){
-                	$moyenne = $value['chiffre_journee'] / $this->getNbProduits();
+                if ($this->getNbProduits() != 0) {
+                    $moyenne = $value['chiffre_journee'] / $this->getNbProduits();
+                } else {
+                    $moyenne = 0;
                 }
-               	else{
-               		$moyenne = 0;
-               	}
 
                 echo '<td>' . number_format($moyenne, 2, '.', ' ') . '€</td>';
 
-              echo '</tr>';
+                echo '</tr>';
 
             }
 
-              echo '<tr>';
-                echo '<td>TOTAUX</td>';
-                echo '<td><strong>' .  $this->totalChiffreJournee . '€</strong></td>';
-                echo '<td>' . $this->totalProduits . '</td>';
+            echo '<tr>';
+            echo '<td>TOTAUX</td>';
+            echo '<td><strong>' . $this->totalChiffreJournee . '€</strong></td>';
+            echo '<td>' . $this->totalProduits . '</td>';
 
-                if($this->getNbProduits() != 0){
-                	$moyenne = $this->totalChiffreJournee / $this->totalProduits;
-                }
-               	else{
-               		$moyenne = 0;
-               	}
+            if ($this->getNbProduits() != 0) {
+                $moyenne = $this->totalChiffreJournee / $this->totalProduits;
+            } else {
+                $moyenne = 0;
+            }
 
-                echo '<td>' . number_format($moyenne, 2, '.', ' ') . '€</td>';
+            echo '<td>' . number_format($moyenne, 2, '.', ' ') . '€</td>';
 
-              echo '</tr>';
+            echo '</tr>';
 
             echo '
               </tbody>
 
             </table>';
-            }
+        }
 
-          }
+    }
 
-		/**
-		 * Getter for transaction
-		 *
-		 * @return mixed
-		 */
-		public function getTransaction()
-		{
-		    return $this->transaction;
-		}
-		
-		/**
-		 * Setter for transaction
-		 *
-		 * @param mixed $transaction Value to set
-		
-		 * @return self
-		 */
-		public function setTransaction($transaction)
-		{
-		    $this->transaction = $transaction;
-		    return $this;
-		}
-		
+    /**
+     * Getter for transaction
+     *
+     * @return mixed
+     */
+    public function getTransaction()
+    {
+        return $this->transaction;
+    }
 
-		/**
-		 * Getter for globals
-		 *
-		 * @return mixed
-		 */
-		public function getGlobals()
-		{
-		    return $this->globals;
-		}
-		
-		/**
-		 * Setter for globals
-		 *
-		 * @param mixed $globals Value to set
-		
-		 * @return self
-		 */
-		public function setGlobals($globals)
-		{
-		    $this->globals = $globals;
-		    return $this;
-		}
-		
+    /**
+     * Setter for transaction
+     *
+     * @param mixed $transaction Value to set
+     * @return self
+     */
+    public function setTransaction($transaction)
+    {
+        $this->transaction = $transaction;
+        return $this;
+    }
 
-		/**
-		 * Getter for magasin
-		 *
-		 * @return mixed
-		 */
-		public function getMagasin()
-		{
-		    return $this->magasin;
-		}
-		
-		/**
-		 * Setter for magasin
-		 *
-		 * @param mixed $magasin Value to set
-		
-		 * @return self
-		 */
-		public function setMagasin($magasin)
-		{
-		    $this->magasin = $magasin;
-		    return $this;
-		}
-		
 
-		/**
-		 * Getter for date
-		 *
-		 * @return mixed
-		 */
-		public function getDate()
-		{
-		    return $this->date;
-		}
-		
-		/**
-		 * Setter for date
-		 *
-		 * @param mixed $date Value to set
-		
-		 * @return self
-		 */
-		public function setDate($date)
-		{
-		    $this->date = $date;
-		    return $this;
-		}
-		
-	}
+    /**
+     * Getter for globals
+     *
+     * @return mixed
+     */
+    public function getGlobals()
+    {
+        return $this->globals;
+    }
+
+    /**
+     * Setter for globals
+     *
+     * @param mixed $globals Value to set
+     * @return self
+     */
+    public function setGlobals($globals)
+    {
+        $this->globals = $globals;
+        return $this;
+    }
+
+
+    /**
+     * Getter for magasin
+     *
+     * @return mixed
+     */
+    public function getMagasin()
+    {
+        return $this->magasin;
+    }
+
+    /**
+     * Setter for magasin
+     *
+     * @param mixed $magasin Value to set
+     * @return self
+     */
+    public function setMagasin($magasin)
+    {
+        $this->magasin = $magasin;
+        return $this;
+    }
+
+
+    /**
+     * Getter for date
+     *
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Setter for date
+     *
+     * @param mixed $date Value to set
+     * @return self
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+        return $this;
+    }
+
+}
 
 ?>

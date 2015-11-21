@@ -918,7 +918,7 @@
 
 		public function getGlobalsWithDATE()
 		{
-			$query = getDb()->prepare("SELECT * FROM recap_global WHERE date = ? ORDER BY CAST(chiffre_journee AS SIGNED) DESC");
+			$query = getDb()->prepare("SELECT * FROM recap_global WHERE date = ? AND chiffre_journee > 0 ORDER BY CAST(chiffre_journee AS SIGNED) DESC");
 			$query->execute(array($this->date));
 
 			return $query->fetchAll();
