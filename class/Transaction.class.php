@@ -924,6 +924,23 @@
 			return $query->fetchAll();
 		}
 
+        public function getOrderAverageByDateAndStore()
+        {
+            $query = getDb()->prepare("SELECT total_ventes FROM transactions WHERE date = ? AND magasin = ?");
+            $query->execute(array($this->date, $this->magasin));
+            $transactionCount = $query->rowCount();
+
+            $query = getDb()->prepare("SELECT SUM(total_ventes) FROM transactions WHERE date = ? AND magasin = ?");
+            $query->execute(array($this->date, $this->magasin));
+            $total_ventes = $query->fetch();
+
+            $total_ventes_value = $total_ventes[0];
+
+            $orderAverage = $total_ventes_value / $transactionCount;
+
+            return $orderAverage;
+        }
+
 		/**
 		 * Getter for magasin
 		 *

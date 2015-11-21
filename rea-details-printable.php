@@ -134,7 +134,5 @@
       </div>
     </div>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/footer.template.php"); ?>
-
 </body>
 </html> 

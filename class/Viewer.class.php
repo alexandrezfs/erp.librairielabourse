@@ -60,7 +60,7 @@
                     <th>Ventes</th>
                     <th>NB de produits</th>
                     <th>Moy. / produit</th>
-                    <th>En ligne</th>
+                    <th>Moy. / encaissement</th>
                     <th>#</th>
                   </tr>
                 </thead>
@@ -110,12 +110,11 @@
 
                 echo '<td>' . number_format($moyenne, 2, '.', ' ') . ' €</td>';
 
-                if($this->magasinObj->isAlive()){
-                	echo '<td><i class="fa fa-check-square" style="font-size:1.2em;"></i></td>';
-                }
-                else{
-                	echo '<td><img src="images/design/warning.png"></td>';
-                }
+                $this->transaction->setDate(date("d/m/Y"));
+                $this->transaction->setMagasin($this->magasin);
+                $orderAverage = $this->transaction->getOrderAverageByDateAndStore();
+
+                echo '<td style="color:red;">' . number_format($orderAverage, 2, '.', ' ') . ' €</td>';
 
                 echo '<td><a href="rea.php?date=' . $value['date'] . '&magasin=' . $value['magasin'] . '"><button class="btn">Réassort</button></a></td>';
                 
