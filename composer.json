@@ -1,0 +1,12 @@
+{
+    "name": "root/erp.librairielabourse.fr",
+    "authors": [
+        {
+            "name": "Alexandre Nguyen",
+            "email": "alex.nr@hotmail.co.jp"
+        }
+    ],
+    "require": {
+	"phpmailer/phpmailer": "dev-master"
+    }
+}

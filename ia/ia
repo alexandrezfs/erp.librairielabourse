@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo ---- Bonjour $USER -----;
+curl http://erp.librairielabourse.fr/ia/ia.php;
