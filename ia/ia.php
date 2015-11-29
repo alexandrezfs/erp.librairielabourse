@@ -10,7 +10,8 @@
 </head>
 <body>
 	<?php 	
-		echo $Alert->GO();
+		//echo $Alert->GO();
+        $Alert->alertIosDevices();
 	?>
 </body>
 </html>
