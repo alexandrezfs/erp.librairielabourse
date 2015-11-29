@@ -17,3 +17,5 @@ autoload/db.autoload.php
 .idea/workspace.xml
 
 /vendor/
+
+ssl/ios_ck.pem

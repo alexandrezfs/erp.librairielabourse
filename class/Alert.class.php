@@ -10,6 +10,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Magasin.class.php");
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Reassort.class.php");
 	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Fraude.class.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/class/IosPushNotificationCenter.php");
   	require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/produitType.autoload.php");
 
 
@@ -156,7 +157,12 @@
 			foreach ($globals as $key => $value) {
 				$total += $value['chiffre_journee'];
 				$message .= '<p>[' . $value['magasin'] . '] : ' . $value['chiffre_journee'] . ' EUROS</p>';
-			}
+
+                //Send an alert to iOS devices as well.
+                $iOSMessage = 'Résultat ' . $value['magasin'] . ' : ' . $value['chiffre_journee'] . ' €';
+                $iosPushNotificationCenter = new IosPushNotificationCenter();
+                $iosPushNotificationCenter->broadcastNotification($iOSMessage);
+            }
 
 			$message .= "
 
