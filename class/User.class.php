@@ -38,7 +38,7 @@
 
 		public function checkConnected()
 		{
-			if(!isset($_SESSION['username'])){
+			if(!isset($_COOKIE['erpusername'])){
 				header("location:/index.php");
 			}
 		}
