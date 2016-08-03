@@ -64,6 +64,6 @@ function printTaches () {
     } 
   });
 
-  setTimeout("printTaches()", 4000);
+  setTimeout("printTaches()", 120000);
 
 }
