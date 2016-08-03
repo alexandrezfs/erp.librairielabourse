@@ -15,7 +15,7 @@
 		public function isAllowedRedirect()
 		{
 			if(!$this->isAllowed()){
-				header("location:/accessgranted.php");
+				//header("location:/accessgranted.php");
 			}
 		}
 
