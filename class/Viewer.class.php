@@ -29,6 +29,8 @@ class Viewer
 
     //END SPE
 
+    private $nbProduits = array();
+
     function Viewer()
     {
         $this->MobileDetect = new Mobile_Detect();
@@ -44,11 +46,21 @@ class Viewer
 
     public function getNbProduits()
     {
-        $query = getDb()->prepare("SELECT id_table FROM produits_encaisses
-				WHERE date = ? AND magasin = ?");
-        $query->execute(array($this->date, $this->magasin));
+        if(!$this->nbProduits[$this->magasin][$this->date]) {
 
-        return $query->rowCount();
+            $query = getDb()->prepare("SELECT COUNT(*) FROM produits_encaisses
+				WHERE date = ? AND magasin = ?");
+            $query->execute(array($this->date, $this->magasin));
+
+            $res = $query->fetch();
+
+            $this->nbProduits[$this->magasin][$this->date] = $res["COUNT(*)"];
+            
+            return $res["COUNT(*)"];
+        }
+        else {
+            return $this->nbProduits[$this->magasin][$this->date];
+        }
     }
 
     public function getPrintedView()
