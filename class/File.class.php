@@ -15,7 +15,7 @@
 		{
 			if($this->file['error'] == 0)
 			{
-				$file = $_SERVER['DOCUMENT_ROOT'] . '/upload/docs/' . $this->file['name'];
+				$file = __DIR__ . '../upload/docs/' . $this->file['name'];
 				$this->fileLink = $_SERVER['HTTP_HOST'] . '/upload/docs/' . $this->file['name'];
 				
 				move_uploaded_file($this->file['tmp_name'], $file);
@@ -41,7 +41,7 @@
 				//if allowed ext are ok with the current extension...
 				if(in_array($uploadExtensions, $allowedExtensions))
 				{	
-					$image = $_SERVER['DOCUMENT_ROOT'] . '/upload/images/' . $this->token . '.' . $uploadExtensions;
+					$image = __DIR__ . '../upload/images/' . $this->token . '.' . $uploadExtensions;
 					$this->fileLink = $_SERVER['HTTP_HOST'] . '/upload/images/' . $this->token . '.' . $uploadExtensions;
 					
 					move_uploaded_file($this->file['tmp_name'], $image);
