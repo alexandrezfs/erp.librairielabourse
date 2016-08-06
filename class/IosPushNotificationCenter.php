@@ -46,7 +46,7 @@ class IosPushNotificationCenter
         $passphrase = 'kazuki69';
 
         $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', __DIR__ . '../ssl/ios_ck.pem');
+        stream_context_set_option($ctx, 'ssl', 'local_cert', __DIR__ . '/../ssl/ios_ck.pem');
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
         $fp = stream_socket_client(

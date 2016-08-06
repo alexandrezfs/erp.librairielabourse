@@ -15,7 +15,7 @@
 		{
 			if($this->file['error'] == 0)
 			{
-				$file = __DIR__ . '../upload/docs/' . $this->file['name'];
+				$file = __DIR__ . '/../upload/docs/' . $this->file['name'];
 				$this->fileLink = $_SERVER['HTTP_HOST'] . '/upload/docs/' . $this->file['name'];
 				
 				move_uploaded_file($this->file['tmp_name'], $file);
