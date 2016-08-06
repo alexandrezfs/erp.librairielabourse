@@ -11,10 +11,10 @@
       <div class="controls text-align-center margin-top-1 big-text">
 
         <div class="row-fluid margin-top-2">
-          <h1>ACCESS GRANTED</h1>
+          <h1>Accès refusé</h1>
 
           <div class="alert alert-block margin-top-1">
-            <p>Vous n'êtes pas autorisé à utiliser ce module.</p>
+            <p>Vous n'êtes pas autorisé à utiliser ce module. Veuillez <a href="/">vous connecter</a> avec un compte autorisé.</p>
           </div>
 
         </div>

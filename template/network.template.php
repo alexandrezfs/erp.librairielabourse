@@ -15,18 +15,4 @@
 
 	</div>
 
-	<div class="row-fluid well small-text">
-
-		<input type="text" id="new-tache" class="full-width" placeholder="Nouvelle tâche">
-
-		<div id="taches-table">
-
-		</div>
-
-		<div id="alert-tache">
-
-		</div>
-
-	</div>
-
 </div>

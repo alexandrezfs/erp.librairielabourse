@@ -24,7 +24,6 @@
 	  <script type="text/javascript" src="js/connect-socket.js"></script>
 	  <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
 	  <script type="text/javascript" src="js/network.js"></script>
-	  <script type="text/javascript" src="js/taches.js"></script>
 	  <script type="text/javascript" src="js/searcher.js"></script>
 	  <script type="text/javascript" src="js/viewer.js"></script>
 	  <script type="text/javascript" src="js/reassorts.js"></script>
