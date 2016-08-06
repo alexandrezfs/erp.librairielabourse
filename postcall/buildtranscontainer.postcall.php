@@ -1,6 +1,6 @@
 <?php
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Transaction.class.php");
+	require_once(__DIR__ . "/../class/Transaction.class.php");
 
 	if(isset($_POST)){
 

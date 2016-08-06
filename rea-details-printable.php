@@ -1,9 +1,9 @@
 <?php
 
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/session.autoload.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/checkconnected.autoload.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Network.class.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Reassort.class.php");
+  require_once(__DIR__ . "/autoload/session.autoload.php");
+  require_once(__DIR__ . "/autoload/checkconnected.autoload.php");
+  require_once(__DIR__ . "/class/Network.class.php");
+  require_once(__DIR__ . "/class/Reassort.class.php");
 
   if(!isset($_GET['date']) || !isset($_GET['magasin']) || !isset($_GET['type'])){header("location:/");}
 
@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require_once($_SERVER['DOCUMENT_ROOT'] . "/template/headcode.template.php"); ?>
+  <?php require_once(__DIR__ . "/template/headcode.template.php"); ?>
 
   <script type="text/javascript">
     window.print();

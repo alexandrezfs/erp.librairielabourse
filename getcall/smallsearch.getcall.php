@@ -1,6 +1,6 @@
 <?php
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Searcher.class.php");
+	require_once(__DIR__ . "/../class/Searcher.class.php");
 
 	header('Content-Type: text/html; charset=utf-8');
 

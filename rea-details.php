@@ -1,9 +1,9 @@
 <?php
 
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/session.autoload.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/checkconnected.autoload.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Network.class.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Reassort.class.php");
+  require_once(__DIR__ . "/autoload/session.autoload.php");
+  require_once(__DIR__ . "/autoload/checkconnected.autoload.php");
+  require_once(__DIR__ . "/class/Network.class.php");
+  require_once(__DIR__ . "/class/Reassort.class.php");
 
   if(!isset($_GET['date']) || !isset($_GET['magasin']) || !isset($_GET['type'])){header("location:/");}
 
@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require_once($_SERVER['DOCUMENT_ROOT'] . "/template/headcode.template.php"); ?>
+  <?php require_once(__DIR__ . "/template/headcode.template.php"); ?>
 
   <style type="text/css" media="print">
     @page { size: landscape; }
@@ -23,9 +23,9 @@
 </head>
 <body>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/header.template.php"); ?>
+    <?php include(__DIR__ . "/template/header.template.php"); ?>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/modal.template.php"); ?>
+    <?php include(__DIR__ . "/template/modal.template.php"); ?>
 
     <div class="container sub-body">
       <div class="controls margin-top-1">
@@ -216,14 +216,14 @@
 
           </div>
 
-          <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/network.template.php"); ?>
+          <?php include(__DIR__ . "/template/network.template.php"); ?>
 
         </div>
 
       </div>
     </div>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/footer.template.php"); ?>
+    <?php include(__DIR__ . "/template/footer.template.php"); ?>
 
 </body>
 </html> 

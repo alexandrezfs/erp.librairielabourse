@@ -1,6 +1,6 @@
 <?php
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Viewer.class.php");
+	require_once(__DIR__ . "/../class/Viewer.class.php");
 
 	if(isset($_POST)){
 

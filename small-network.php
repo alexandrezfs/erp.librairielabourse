@@ -1,9 +1,9 @@
 <?php
 
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/session.autoload.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/checkconnected.autoload.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Network.class.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/User.class.php");
+  require_once(__DIR__ . "/autoload/session.autoload.php");
+  require_once(__DIR__ . "/autoload/checkconnected.autoload.php");
+  require_once(__DIR__ . "/class/Network.class.php");
+  require_once(__DIR__ . "/class/User.class.php");
 
   $User = new User();
 
@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require_once($_SERVER['DOCUMENT_ROOT'] . "/template/headcode.template.php"); ?>
+  <?php require_once(__DIR__ . "/template/headcode.template.php"); ?>
 </head>
 <body>
 

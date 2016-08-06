@@ -1,6 +1,6 @@
 <?php
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Reassort.class.php");
+	require_once(__DIR__ . "/../class/Reassort.class.php");
 
 	if(isset($_POST)){
 

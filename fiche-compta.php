@@ -1,10 +1,10 @@
 <?php
 
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/session.autoload.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/checkconnected.autoload.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Network.class.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Transaction.class.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/produitType.autoload.php");
+  require_once(__DIR__ . "/autoload/session.autoload.php");
+  require_once(__DIR__ . "/autoload/checkconnected.autoload.php");
+  require_once(__DIR__ . "/class/Network.class.php");
+  require_once(__DIR__ . "/class/Transaction.class.php");
+  require_once(__DIR__ . "/autoload/produitType.autoload.php");
 
 ?>
 
@@ -29,9 +29,9 @@
 </head>
 <body>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/header.template.php"); ?>
+    <?php include(__DIR__ . "/template/header.template.php"); ?>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/modal.template.php"); ?>
+    <?php include(__DIR__ . "/template/modal.template.php"); ?>
 
     <div class="container sub-body">
       <div class="controls margin-top-1 small-text">
@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/footer.template.php"); ?>
+    <?php include(__DIR__ . "/template/footer.template.php"); ?>
 
 </body>
 </html> 

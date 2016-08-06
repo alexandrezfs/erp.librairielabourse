@@ -1,11 +1,11 @@
 <?php
 
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/session.autoload.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Network.class.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/MobileDetect.class.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Transaction.class.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Magasin.class.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Viewer.class.php");
+  require_once(__DIR__ . "/autoload/session.autoload.php");
+  require_once(__DIR__ . "/class/Network.class.php");
+  require_once(__DIR__ . "/class/MobileDetect.class.php");
+  require_once(__DIR__ . "/class/Transaction.class.php");
+  require_once(__DIR__ . "/class/Magasin.class.php");
+  require_once(__DIR__ . "/class/Viewer.class.php");
 
   $Viewer = new Viewer();
 
@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require_once($_SERVER['DOCUMENT_ROOT'] . "/template/headcode.template.php"); ?>
+  <?php require_once(__DIR__ . "/template/headcode.template.php"); ?>
 
   <script type="text/javascript">
 
@@ -30,7 +30,7 @@
 </head>
 <body>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/header.template.php"); ?>
+    <?php include(__DIR__ . "/template/header.template.php"); ?>
 
     <div class="container sub-body">
       <div class="controls">
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/footer.template.php"); ?>
+    <?php include(__DIR__ . "/template/footer.template.php"); ?>
 
 </body>
 </html> 

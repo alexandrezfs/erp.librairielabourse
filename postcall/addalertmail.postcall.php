@@ -1,6 +1,6 @@
 <?php
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/EmailAlert.class.php");
+	require_once(__DIR__ . "/../class/EmailAlert.class.php");
 
 	if(isset($_POST)){
 

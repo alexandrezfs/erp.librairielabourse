@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require_once($_SERVER['DOCUMENT_ROOT'] . "/template/headcode.template.php"); ?>
+  <?php require_once(__DIR__ . "/template/headcode.template.php"); ?>
 </head>
 <body>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/header.template.php"); ?>
+    <?php include(__DIR__ . "/template/header.template.php"); ?>
 
     <div class="container sub-body">
       <div class="controls text-align-center margin-top-1 big-text">
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/footer.template.php"); ?>
+    <?php include(__DIR__ . "/template/footer.template.php"); ?>
 
 </body>
 </html> 

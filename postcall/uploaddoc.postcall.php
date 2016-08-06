@@ -1,9 +1,9 @@
 <?php
 
-  	require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/session.autoload.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Document.class.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/File.class.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Time.class.php");
+  	require_once(__DIR__ . "/../autoload/session.autoload.php");
+	require_once(__DIR__ . "/../class/Document.class.php");
+	require_once(__DIR__ . "/../class/File.class.php");
+	require_once(__DIR__ . "/../class/Time.class.php");
 
 	if(isset($_POST)){
 

@@ -1,6 +1,6 @@
 <?php
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Network.class.php");
+	require_once(__DIR__ . "/../class/Network.class.php");
 
 	if(isset($_POST)){
 

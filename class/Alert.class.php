@@ -1,17 +1,17 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/class/IA.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/session.autoload.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/db.autoload.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Mail.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Transaction.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Viewer.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Searcher.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Magasin.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Reassort.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Fraude.class.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/class/IosPushNotificationCenter.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/produitType.autoload.php");
+require_once(__DIR__ . "/../class/IA.class.php");
+require_once(__DIR__ . "/../autoload/session.autoload.php");
+require_once(__DIR__ . "/../autoload/db.autoload.php");
+require_once(__DIR__ . "/../class/Mail.class.php");
+require_once(__DIR__ . "/../class/Transaction.class.php");
+require_once(__DIR__ . "/../class/Viewer.class.php");
+require_once(__DIR__ . "/../class/Searcher.class.php");
+require_once(__DIR__ . "/../class/Magasin.class.php");
+require_once(__DIR__ . "/../class/Reassort.class.php");
+require_once(__DIR__ . "/../class/Fraude.class.php");
+require_once(__DIR__ . "/../class/IosPushNotificationCenter.php");
+require_once(__DIR__ . "/../autoload/produitType.autoload.php");
 
 
 class Alert extends IA

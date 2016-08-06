@@ -1,8 +1,8 @@
 <?php
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/session.autoload.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Acheteur.class.php");
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/ProduitAchete.class.php");
+	require_once(__DIR__ . "/../autoload/session.autoload.php");
+	require_once(__DIR__ . "/../class/Acheteur.class.php");
+	require_once(__DIR__ . "/../class/ProduitAchete.class.php");
 
 	if(isset($_POST)){
 

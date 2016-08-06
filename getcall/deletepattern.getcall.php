@@ -1,6 +1,6 @@
 <?php
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Concurrence.class.php");
+	require_once(__DIR__ . "/../class/Concurrence.class.php");
 
 	if(isset($_GET)){
 

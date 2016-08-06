@@ -1,11 +1,11 @@
 <?php
 
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/session.autoload.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/checkconnected-admin.autoload.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/User.class.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Module.class.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Access.class.php");
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Sound.class.php");
+  require_once(__DIR__ . "/autoload/session.autoload.php");
+  require_once(__DIR__ . "/autoload/checkconnected-admin.autoload.php");
+  require_once(__DIR__ . "/class/User.class.php");
+  require_once(__DIR__ . "/class/Module.class.php");
+  require_once(__DIR__ . "/class/Access.class.php");
+  require_once(__DIR__ . "/class/Sound.class.php");
 
   $User = new User();
   $Access = new Access();
@@ -18,10 +18,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <?php require_once($_SERVER['DOCUMENT_ROOT'] . "/template/headcode.template.php"); ?>
+  <?php require_once(__DIR__ . "/template/headcode.template.php"); ?>
 <body>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/header.template.php"); ?>
+    <?php include(__DIR__ . "/template/header.template.php"); ?>
 
     <div class="container sub-body">
       <div class="controls text-align-center margin-top-1 big-text">
@@ -187,7 +187,7 @@
       </div>
     </div>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/template/footer.template.php"); ?>
+    <?php include(__DIR__ . "/template/footer.template.php"); ?>
 
 </body>
 </html> 

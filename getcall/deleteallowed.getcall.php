@@ -1,6 +1,6 @@
 <?php
 
-  require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Access.class.php");
+  require_once(__DIR__ . "/../class/Access.class.php");
 
   if(isset($_GET)){
 	  $Access = new Access();

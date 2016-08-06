@@ -1,6 +1,6 @@
 <?php  
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Acheteur.class.php");
+	require_once(__DIR__ . "/../class/Acheteur.class.php");
 
 	if(isset($_POST)){
 		$Acheteur = new Acheteur();

@@ -1,8 +1,8 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/session.autoload.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload/db.autoload.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/class/IosPushNotificationCenter.php");
+require_once(__DIR__ . "/autoload/session.autoload.php");
+require_once(__DIR__ . "/autoload/db.autoload.php");
+require_once(__DIR__ . "/class/IosPushNotificationCenter.php");
 
 $iosPushNotificationCenter = new IosPushNotificationCenter();
 

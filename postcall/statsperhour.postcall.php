@@ -1,6 +1,6 @@
 <?php  
 
-	require_once($_SERVER['DOCUMENT_ROOT'] . "/class/Stats.class.php");
+	require_once(__DIR__ . "/../class/Stats.class.php");
 
 	if(isset($_POST)){
 		$Stats = new Stats();
