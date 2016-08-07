@@ -31,7 +31,7 @@
 
         <div class="row-fluid">
           <div class="span12 well">
-            <legend>Bienvenue sur la plateforme du B.I.S <?php echo __DIR__ ?></legend>
+            <legend>Bienvenue sur la plateforme du B.I.S</legend>
             <div>
               <img src="images/design/bis_logo.png">
             </div>
