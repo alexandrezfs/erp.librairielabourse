@@ -7,9 +7,13 @@ class RainSensor {
 
     private $iosNotificationCenter;
 
+    function RainSensor() {
+
+        $this->iosNotificationCenter = new IosPushNotificationCenter();
+    }
+
     public function sendRainingNotification() {
 
-        new IosPushNotificationCenter();
         $this->iosNotificationCenter->broadcastNotification("Pluie détectée au magasin ! Prenez les mesures nécéssaires.");
     }
 }
