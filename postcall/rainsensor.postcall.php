@@ -7,4 +7,7 @@ if(isset($_POST)){
     $RainSenor = new RainSensor();
     $RainSenor->sendRainingNotification();
 
+    if(isset($_POST['stoppedRaining'])) {
+        $RainSenor->sendStoppedRainingNotification();
+    }
 }

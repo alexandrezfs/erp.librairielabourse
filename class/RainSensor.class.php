@@ -16,4 +16,9 @@ class RainSensor {
 
         $this->iosNotificationCenter->broadcastNotification("Pluie détectée au magasin ! Prenez les mesures nécéssaires.");
     }
+
+    public function sendStoppedRainingNotification() {
+
+        $this->iosNotificationCenter->broadcastNotification("La pluie a cessé au magasin.");
+    }
 }
