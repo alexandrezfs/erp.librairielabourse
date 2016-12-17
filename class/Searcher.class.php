@@ -325,6 +325,7 @@ class Searcher
         $data = array('codes' => $this->keyword);
 
         $options = array(
+            'timeout' => 7000,
             'http' => array(
                 'header' => "Content-type: application/x-www-form-urlencoded\r\n",
                 'method' => 'POST',
