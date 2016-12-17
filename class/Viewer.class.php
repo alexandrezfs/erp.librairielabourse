@@ -46,7 +46,7 @@ class Viewer
 
     public function getNbProduits()
     {
-        if(!$this->nbProduits[$this->magasin][$this->date]) {
+        if(!isset($this->nbProduits[$this->magasin][$this->date])) {
 
             $query = getDb()->prepare("SELECT COUNT(*) FROM produits_encaisses
 				WHERE date = ? AND magasin = ?");
