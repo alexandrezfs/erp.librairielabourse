@@ -342,7 +342,7 @@ class Searcher
         if ($price) {
             $this->result .= '
             <div class="well">
-                <legend>Analyse de la Concurrence</legend>
+                <legend>Analyse de la concurrence</legend>
                 <h5>Ce produit est racheté <span style="font-size:1.5em;">' . $price . ' € chez GIBERT JOSEPH</span>
                 </h5>
             </div>';
