@@ -52,7 +52,7 @@
 			$mail->Username = "librairielabourse@gmail.com";
 
 			//Password to use for SMTP authentication
-			$mail->Password = "labourse";
+			$mail->Password = "bourse69001";
 
 			//Set who the message is to be sent from
 			$mail->setFrom($this->sender, $this->sendername);
