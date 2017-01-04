@@ -151,7 +151,7 @@ class Alert extends IA
         $this->Transaction->setDate(date("d/m/Y"));
         $globals = $this->Transaction->getGlobalsWithDATE();
 
-        $message = "<br><br><h3>Voici vos chiffres d'affaire le " . date("d/m/Y") . " à " . date("H:i") . " : </h3>";
+        $message = "<br><br><h3>Voici vos chiffres d'affaire le " . date("d/m/Y") . " : </h3>";
 
         $total = 0;
         foreach ($globals as $key => $value) {
@@ -184,9 +184,9 @@ class Alert extends IA
             $Magasin->setNom($value['localisation']);
 
             if ($Magasin->isAlive()) {
-                $message .= '</p>La caisse : ' . $value['localisation'] . ' est bien connectée</p>';
+                $message .= '</p>La caisse : ' . $value['localisation'] . ' est bien connectee</p>';
             } else {
-                $message .= '<p>La caisse : ' . $value['localisation'] . ' n\'est <strong>PAS connectée</strong></p>';
+                $message .= '<p>La caisse : ' . $value['localisation'] . ' n\'est <strong>PAS connectee</strong></p>';
             }
         }
 
