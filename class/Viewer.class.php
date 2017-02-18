@@ -144,7 +144,7 @@ class Viewer
 
                 echo '<td style="color:red;">' . number_format($orderAverage, 2, '.', ' ') . ' €</td>';
 
-                echo '<td><a href="rea.php?date=' . $value['date'] . '&magasin=' . $value['magasin'] . '"><button class="btn">Réassort</button></a></td>';
+                echo '<td><a href="http://services.librairielabourse.fr/reports/product?date=' . $value['date'] . '&magasin=' . $value['magasin'] . '"><button class="btn">Réassort</button></a></td>';
 
                 echo '</tr>';
 

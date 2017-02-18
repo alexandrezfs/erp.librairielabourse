@@ -259,7 +259,7 @@ class Searcher
                 $this->result .= '<tr>';
                 $this->result .= '<td>' . $row['date'] . '</td>';
                 $this->result .= '<td>' . htmlspecialchars($row['magasin']) . '</td>';
-                $this->result .= '<td><a href="fiche-compta.php?date=' . $row['date'] . '&magasin=' . $row['magasin'] . '" class="btn">Consulter</a></td>';
+                $this->result .= '<td><a href="http://services.librairielabourse.fr/reports/caisse?date=' . $row['date'] . '&magasin=' . $row['magasin'] . '" target="_blank" class="btn">Consulter</a></td>';
                 $this->result .= '</tr>';
             }
 
@@ -303,7 +303,7 @@ class Searcher
                 $this->result .= '<tr>';
                 $this->result .= '<td>' . $row['date'] . '</td>';
                 $this->result .= '<td>' . htmlspecialchars($row['magasin']) . '</td>';
-                $this->result .= '<td><a href="rea.php?date=' . $row['date'] . '&magasin=' . htmlspecialchars($row['magasin']) . '"><button class="btn">Consulter</button></a></td>';
+                $this->result .= '<td><a href="http://services.librairielabourse.fr/reports/product?date=' . $row['date'] . '&magasin=' . htmlspecialchars($row['magasin']) . '"><button class="btn">Consulter</button></a></td>';
                 $this->result .= '</tr>';
             }
 
