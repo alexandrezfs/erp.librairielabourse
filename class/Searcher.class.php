@@ -259,7 +259,7 @@ class Searcher
                 $this->result .= '<tr>';
                 $this->result .= '<td>' . $row['date'] . '</td>';
                 $this->result .= '<td>' . htmlspecialchars($row['magasin']) . '</td>';
-                $this->result .= '<td><a href="http://services.librairielabourse.fr/reports/caisse?date=' . $row['date'] . '&magasin=' . $row['magasin'] . '" target="_blank" class="btn">Consulter</a></td>';
+                $this->result .= '<td><a href="http://services.librairielabourse.fr/reports/caisse?date=' . $row['date'] . '&magasin=' . $row['magasin'] . '&rea=REASSORTI&type=LIVRE" target="_blank" class="btn">Consulter</a></td>';
                 $this->result .= '</tr>';
             }
 
