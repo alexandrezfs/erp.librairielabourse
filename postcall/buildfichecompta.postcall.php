@@ -21,6 +21,119 @@
 
             <h3>Chiffre d'affaires : <?php echo $global['chiffre_journee'] ?> €</h3>
 
+            <h4 class="margin-top-1">Entrées / sorties de valeur</h4>
+
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <td><strong>ESP [ENTREE]</strong></td>
+                  <td><strong>CB [ENTREE]</strong></td>
+                  <td><strong>CHEQUE [ENTREE]</strong></td>
+                  <td><strong>AVOIR [ENTREE]</strong></td>
+                  <td><strong>ECHANGE [ENTREE]</strong></td>
+                  <td><strong>ESP [SORTIE]</strong></td>
+                  <td><strong>AVOIR [SORTIE]</strong></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><?php echo $Transaction->getEsp() . '€'; ?></td>
+                  <td><?php echo $Transaction->getCB() . '€'; ?></td>
+                  <td><?php echo $Transaction->getCheque() . '€'; ?></td>
+                  <td><?php echo $Transaction->getAvoirUtil() . '€'; ?></td>
+                  <td><?php echo $Transaction->getEchangeUtil() . '€'; ?></td>
+                  <td><?php echo $Transaction->getEspEmis() . '€'; ?></td>
+                  <td><?php echo $Transaction->getAvoirEmis() . '€'; ?></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4 class="margin-top-1">Produits (statistiques)</h4>
+
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <td><strong>#</strong></td>
+                  <td><strong>LIVRE</strong></td>
+                  <td><strong>DVD</strong></td>
+                  <td><strong>BLU-RAY</strong></td>
+                  <td><strong>CD</strong></td>
+                  <td><strong>VINYLE</strong></td>
+                  <td><strong>JEU</strong></td>
+                  <td><strong>CONSOLE</strong></td>
+                  <td><strong>AUTRE</strong></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Nombre</td>
+                  <td><?php echo $Transaction->getTotalLIVRE(); ?></td>
+                  <td><?php echo $Transaction->getTotalDVD(); ?></td>
+                  <td><?php echo $Transaction->getTotalBLURAY(); ?></td>
+                  <td><?php echo $Transaction->getTotalCD(); ?></td>
+                  <td><?php echo $Transaction->getTotalVINYLE(); ?></td>
+                  <td><?php echo $Transaction->getTotalJEU(); ?></td>
+                  <td><?php echo $Transaction->getTotalCONSOLE(); ?></td>
+                  <td><?php echo $Transaction->getTotalAUTRE(); ?></td>
+                </tr>
+                <tr>
+                  <td>Valeur</td>
+                  <td><?php echo $Transaction->getTotalLIVREPrix() . '€'; ?></td>
+                  <td><?php echo $Transaction->getTotalDVDPrix() . '€'; ?></td>
+                  <td><?php echo $Transaction->getTotalBLURAYPrix() . '€'; ?></td>
+                  <td><?php echo $Transaction->getTotalCDPrix() . '€'; ?></td>
+                  <td><?php echo $Transaction->getTotalVINYLEPrix() . '€'; ?></td>
+                  <td><?php echo $Transaction->getTotalJEUPrix() . '€'; ?></td>
+                  <td><?php echo $Transaction->getTotalCONSOLEPrix() . '€'; ?></td>
+                  <td><?php echo $Transaction->getTotalAUTREPrix() . '€'; ?></td>
+                </tr>
+                <tr>
+                  <td>Moyenne</td>
+                  <td><?php if($Transaction->getTotalLIVRE() != 0){echo number_format($Transaction->getTotalLIVREPrix() / $Transaction->getTotalLIVRE(), 2, '.', ' ') . '€';} else{echo '0€';} ?></td>
+                  <td><?php if($Transaction->getTotalDVD() != 0){echo number_format($Transaction->getTotalDVDPrix() / $Transaction->getTotalDVD(), 2, '.', ' ')  . '€';} else{echo '0€';} ?></td>
+                  <td><?php if($Transaction->getTotalBLURAY() != 0){echo number_format($Transaction->getTotalBLURAYPrix() / $Transaction->getTotalBLURAY(), 2, '.', ' ')  . '€';} else{echo '0€';} ?></td>
+                  <td><?php if($Transaction->getTotalCD() != 0){echo number_format($Transaction->getTotalCDPrix() / $Transaction->getTotalCD(), 2, '.', ' ')  . '€';} else{echo '0€';} ?></td>
+                  <td><?php if($Transaction->getTotalVINYLE() != 0){echo number_format($Transaction->getTotalVINYLEPrix() / $Transaction->getTotalVINYLE(), 2, '.', ' ')  . '€';} else{echo '0€';} ?></td>
+                  <td><?php if($Transaction->getTotalJEU() != 0){echo number_format($Transaction->getTotalJEUPrix() / $Transaction->getTotalJEU(), 2, '.', ' ')  . '€';} else{echo '0€';} ?></td>
+                  <td><?php if($Transaction->getTotalCONSOLE() != 0){echo number_format($Transaction->getTotalCONSOLEPrix() / $Transaction->getTotalCONSOLE(), 2, '.', ' ')  . '€';} else{echo '0€';} ?></td>
+                  <td><?php if($Transaction->getTotalAUTRE() != 0){echo number_format($Transaction->getTotalAUTREPrix() / $Transaction->getTotalAUTRE(), 2, '.', ' ')  . '€';} else{echo '0€';} ?></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4 class="margin-top-1">Comparaison Réassorts / Non réassorts</h4>
+
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <td><strong>#</strong></td>
+                  <td><strong>Reassortis</strong></td>
+                  <td><strong>Non réassortis</strong></td>
+                  <td><strong>Totaux</strong></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Nombre</td>
+                  <td><?php echo $Transaction->getTotalProdRea(); ?></td>
+                  <td><?php echo $Transaction->getTotalProdNoRea(); ?></td>
+                  <td><?php echo $Transaction->getTotalProd(); ?></td>
+                </tr>
+                <tr>
+                  <td>Valeur</td>
+                  <td><?php echo $Transaction->getTotalProdReaPrix() . '€'; ?></td>
+                  <td><?php echo $Transaction->getTotalProdNoReaPrix() . '€'; ?></td>
+                  <td><?php echo $Transaction->getTotalProdPrix() . '€'; ?></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h4 class="margin-top-1">Détail des transactions</h4>
+
+            <p>
+              <a href="#" onclick="buildDetailledTransacContainers(); return false;"><button class="btn btn-primary">Afficher + de détails</button></a>
+            </p>
+
             <?php
 
               $transactions = $Transaction->getTransactionsWithDATE();
