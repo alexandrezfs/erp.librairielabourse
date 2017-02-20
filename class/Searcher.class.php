@@ -303,7 +303,7 @@ class Searcher
                 $this->result .= '<tr>';
                 $this->result .= '<td>' . $row['date'] . '</td>';
                 $this->result .= '<td>' . htmlspecialchars($row['magasin']) . '</td>';
-                $this->result .= '<td><a href="http://services.librairielabourse.fr/reports/product?date=' . $row['date'] . '&magasin=' . htmlspecialchars($row['magasin']) . '&rea=REASSORTI&type=LIVRE" target="_blank"><button class="btn">Consulter</button></a></td>';
+                $this->result .= '<td><a href="rea.php?date=' . $row['date'] . '&magasin=' . htmlspecialchars($row['magasin']) . '"><button class="btn">Consulter</button></a></td>';
                 $this->result .= '</tr>';
             }
 

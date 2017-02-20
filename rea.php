@@ -54,7 +54,8 @@
                 echo '<tr>';
                   echo '<td>' . $value . '</td>';
                   echo '<td>' .  $Reassort->getReaPercent() . ' %</td>';
-                  echo '<td><a href="rea-details.php?date=' . $_GET['date'] . '&magasin=' . $_GET['magasin'] . '&type=' . $value . '"><button class="btn">Consulter</button></a></td>';
+                echo '<td><a href="http://services.librairielabourse.fr/reports/product?date=' . $_GET['date'] . '&magasin=' . htmlspecialchars($_GET['magasin']) . '&rea=REASSORTI&type=' . $value . '" target="_blank"><button class="btn">Consulter les REASSORTIS</button></a></td>';
+                echo '<td><a href="http://services.librairielabourse.fr/reports/product?date=' . $_GET['date'] . '&magasin=' . htmlspecialchars($_GET['magasin']) . '&rea=NON_REASSORTI&type=' . $value . '" target="_blank"><button class="btn">Consulter les NON REASSORTIS</button></a></td>';
                 echo '</tr>';
 
               }
