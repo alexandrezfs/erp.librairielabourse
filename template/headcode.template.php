@@ -6,7 +6,7 @@
 				echo '<title>NETWORK</title>';
 			}
 			else{
-				echo '<title>Bourse ERP X1</title>';
+				echo '<title>Bourse I.S</title>';
 			}
 
 		?>
