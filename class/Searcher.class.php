@@ -82,7 +82,7 @@ class Searcher
             $query = getDb()->prepare("SELECT * FROM transactions WHERE
 			date LIKE :keyword OR heure LIKE :keyword OR magasin LIKE :keyword
 			OR no_transaction LIKE :keyword
-			ORDER BY no_transaction DESC LIMIT 50");
+			ORDER BY no_transaction DESC LIMIT 3000");
             $query->execute(array('keyword' => '%' . $this->keyword . '%'));
 
             if ($query->rowCount() == 0) {
