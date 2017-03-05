@@ -167,8 +167,7 @@ class Searcher
     {
 
         $query = getDb()->prepare("SELECT * FROM produits WHERE code LIKE :keyword OR
-			titre LIKE :keyword OR auteur LIKE :keyword OR editeur LIKE :keyword
-			OR edition LIKE :keyword OR type LIKE :keyword
+			titre LIKE :keyword OR auteur LIKE :keyword OR editeur
 			ORDER BY id DESC LIMIT 100");
         $query->execute(array('keyword' => '%' . $this->keyword . '%'));
 
