@@ -25,6 +25,35 @@ class Searcher
         $this->result .= '</div>';
     }
 
+    public function findConcurrence()
+    {
+        $query = getDb()->prepare("SELECT * FROM pattern_concur ORDER BY titre ASC");
+        $query->execute(array('keyword' => '%' . $this->keyword . '%'));
+
+        if ($query->rowCount() == 0) {
+
+            $this->result .= '<h3>Aucun pattern marché n\'a été défini !</h3>';
+
+        } else {
+
+            $this->result .= '<div class="img-concur-container">';
+
+            while ($row = $query->fetch()) {
+                $this->result .= '
+							<a href="' . $row['before_pattern'] . htmlspecialchars($this->keyword) . $row['after_pattern'] . '" target="_blank"><img src="http://' . $row['image'] . '" class="tooltip-me" data-toggle="tooltip" title="Trouver ' . htmlspecialchars($this->keyword) . ' sur ' . htmlspecialchars($row['titre']) . '"></a>';
+            }
+
+            $this->result .= '</div>';
+
+            $this->result .= '
+					<script>
+						$(".tooltip-me").tooltip();
+					</script>
+				';
+
+        }
+    }
+
     public function buildFullResult()
     {
         $this->result .= '
@@ -47,7 +76,8 @@ class Searcher
 
 				<div class="tab-pane active" id="produits-encaisses">';
 
-        $this->findPriceOnGibertJoseph();
+        $this->findConcurrence();
+        //$this->findPriceOnGibertJoseph();
         $this->findProduitsEncaisses();
 
         $this->result .= '</div>';
