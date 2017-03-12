@@ -8,6 +8,7 @@ class Searcher
     private $keyword;
     private $result;
     const REGEX_GIBERT_JOSEPH = "/<span>([0-9.]+)&nbsp;&euro;/";
+    const LABOURE_SERVICES_ADDR = "http://services.librairielabourse.fr/bourse-services";
 
     function Searcher($_keyword)
     {
@@ -56,6 +57,7 @@ class Searcher
 
     public function buildFullResult()
     {
+
         $this->result .= '
 
 			<script>
@@ -347,24 +349,52 @@ class Searcher
     {
         if(!$this->isDate()) {
 
+            $authQuery = http_build_query(array('username'=>'bourse','password'=>'bourse'));
 
-            $query = getDb()->prepare("SELECT * FROM produits_encaisses
-				WHERE titre LIKE :keyword OR auteur LIKE :keyword OR
-				editeur LIKE :keyword OR code LIKE :keyword OR
-				date LIKE :keyword OR edition LIKE :keyword
-				OR no_transaction LIKE :keyword
-				ORDER BY id_table DESC LIMIT 300");
-            $query->execute(array('keyword' => '%' . $this->keyword . '%'));
+            $options = array(
+                'http' => array(
+                    'header' => "Connection: close\r\n".
+                        "Content-Length: ".strlen($authQuery)."\r\n".
+                        "Content-type: application/x-www-form-urlencoded\r\n",
+                    'method'  => 'POST',
+                    'content' => $authQuery
+                )
+            );
 
-            if ($query->rowCount() == 0) {
+            $context  = stream_context_create($options);
+            file_get_contents(LABOURE_SERVICES_ADDR . "/login", false, $context);
+
+            $sessId = str_replace(';path=/;HttpOnly', '', str_replace('Set-Cookie: JSESSIONID=', '', $http_response_header[11]));
+
+            $params = array('searchType' => 'SOLD_PRODUCT', 'keyword' => $this->keyword);
+
+            $paramJson = json_encode($params);
+
+            $options = array(
+                'http' => array(
+                    'header'  => "Connection: close\r\n".
+                        "Content-type: application/json\r\n".
+                        "Content-Length: ".strlen($paramJson)."\r\n".
+                        'Cookie: JSESSIONID='.$sessId.";\r\n",
+                    'method'  => 'POST',
+                    'content' => $paramJson
+                )
+            );
+
+            $context  = stream_context_create($options);
+            $queryResult = file_get_contents(LABOURE_SERVICES_ADDR . "/search", false, $context);
+
+            $searchResult = json_decode($queryResult, true);
+
+            if (!$searchResult) {
 
                 $this->result .= '<h5>Aucun produit vendu n\'a été trouvé !</h5>';
-
-            } else {
+            }
+            else {
 
                 $this->result .= '<div>';
 
-                $this->result .= '<h5>Produit vendu ' . $query->rowCount() . ' fois</h5>';
+                $this->result .= '<h5>Produit vendu ' . count($searchResult) . ' fois</h5>';
 
                 $this->result .= '<table class="table table-striped table-bordered">
 				              <thead>
@@ -383,15 +413,15 @@ class Searcher
 				              <tbody>
 					';
 
-                while ($row = $query->fetch()) {
+                foreach ($searchResult as $row) {
                     $this->result .= '<tr>';
-                    $this->result .= '<td>#' . $row['no_transaction'] . '<br>' . $row['date'] . ' à ' . $row['heure'] . ' sur ' . $row['magasin'] . '</td>';
+                    $this->result .= '<td>#' . $row['noTransaction'] . '<br>' . $row['date'] . ' à ' . $row['heure'] . ' sur ' . $row['magasin'] . '</td>';
                     $this->result .= '<td>' . $row['prix'] . '€</td>';
                     $this->result .= '<td class="' . $row['code'] . '">' . $row['code'] . '</td>';
                     $this->result .= '<td>' . $row['reassorts'] . '</td>';
-                    $this->result .= '<td>' . $row['titre'] . '</td>';
-                    $this->result .= '<td>' . $row['auteur'] . '</td>';
-                    $this->result .= '<td>' . $row['editeur'] . '</td>';
+                    $this->result .= '<td>' . $row['title'] . '</td>';
+                    $this->result .= '<td>' . $row['author'] . '</td>';
+                    $this->result .= '<td>' . $row['editor'] . '</td>';
                     $this->result .= '<td>' . $row['edition'] . '</td>';
                     $this->result .= '<td><a href="#modal" role="button" class="btn" data-toggle="modal" onclick="buildProduitsModal(\'' . $row['code'] . '\'); return false;">Corriger</a></td>';
                     $this->result .= '</tr>';
