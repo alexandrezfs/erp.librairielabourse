@@ -349,22 +349,7 @@ class Searcher
     {
         if(!$this->isDate()) {
 
-            $authQuery = http_build_query(array('username'=>'bourse','password'=>'bourse'));
-
-            $options = array(
-                'http' => array(
-                    'header' => "Connection: close\r\n".
-                        "Content-Length: ".strlen($authQuery)."\r\n".
-                        "Content-type: application/x-www-form-urlencoded\r\n",
-                    'method'  => 'POST',
-                    'content' => $authQuery
-                )
-            );
-
-            $context  = stream_context_create($options);
-            file_get_contents(LABOURE_SERVICES_ADDR . "/login", false, $context);
-
-            $sessId = str_replace(';path=/;HttpOnly', '', str_replace('Set-Cookie: JSESSIONID=', '', $http_response_header[11]));
+            $sessId = $this->authenticateToBourseServices();
 
             $params = array('searchType' => 'SOLD_PRODUCT', 'keyword' => $this->keyword);
 
@@ -382,7 +367,7 @@ class Searcher
             );
 
             $context  = stream_context_create($options);
-            $queryResult = file_get_contents(LABOURE_SERVICES_ADDR . "/search", false, $context);
+            $queryResult = file_get_contents(Searcher::LABOURE_SERVICES_ADDR . "/search", false, $context);
 
             $searchResult = json_decode($queryResult, true);
 
@@ -500,6 +485,46 @@ class Searcher
     private function isDate()
     {
         return isset($this->keyword) && strpos($this->keyword, "/") !== false;
+    }
+
+    /**
+     * @param $http_response_header
+     * @return mixed
+     */
+    private function getSessionIdFromResponseHeader($http_response_header)
+    {
+        foreach ($http_response_header as $h) {
+
+            if (strpos($h, "JSESSIONID") !== false) {
+                $sessId = str_replace(';path=/;HttpOnly', '', str_replace('Set-Cookie: JSESSIONID=', '', $h));
+            }
+
+        }
+
+        return $sessId;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function authenticateToBourseServices()
+    {
+        $authQuery = http_build_query(array('username' => 'bourse', 'password' => 'bourse'));
+
+        $options = array(
+            'http' => array(
+                'header' => "Connection: close\r\n" .
+                    "Content-Length: " . strlen($authQuery) . "\r\n" .
+                    "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => $authQuery
+            )
+        );
+
+        $context = stream_context_create($options);
+        file_get_contents(Searcher::LABOURE_SERVICES_ADDR . "/login", false, $context);
+
+        return $this->getSessionIdFromResponseHeader($http_response_header);
     }
 
 }
