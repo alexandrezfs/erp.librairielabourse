@@ -251,6 +251,7 @@ class Searcher
                     $this->result .= '<td>' . htmlspecialchars($row['magasin']) . '</td>';
                     $this->result .= '<td><a href="http://services.librairielabourse.fr/reports/globalCompta?date=' . $row['date'] . '&magasin=' . $row['magasin'] . '" target="_blank" class="btn">Rapport global</a></td>';
                     $this->result .= '<td><a href="http://services.librairielabourse.fr/reports/caisse?date=' . $row['date'] . '&magasin=' . $row['magasin'] . '" target="_blank" class="btn">Rapport transactions</a></td>';
+                    $this->result .= '<td><a href="http://services.librairielabourse.fr/reports/detailsTransac?date=' . $row['date'] . '&magasin=' . $row['magasin'] . '" target="_blank" class="btn">Détails des transactions</a></td>';
                     $this->result .= '</tr>';
                 }
 
