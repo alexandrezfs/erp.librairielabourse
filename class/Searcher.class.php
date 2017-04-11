@@ -350,27 +350,30 @@ class Searcher
     {
         if(!$this->isDate()) {
 
-            $sessId = $this->authenticateToBourseServices();
+            $sessionID = $this->authenticateToBourseServices();
 
-            $params = array('searchType' => 'SOLD_PRODUCT', 'keyword' => $this->keyword);
+            $post = [
+                'searchType' => 'SOLD_PRODUCT',
+                'keyword' => $this->keyword
+            ];
 
-            $paramJson = json_encode($params);
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, Searcher::LABOURE_SERVICES_ADDR . '/search');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Cookie: JSESSIONID=' . $sessionID, 'Content-Type: application/json'));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
+            curl_setopt($ch, CURLOPT_VERBOSE, 1);
+            curl_setopt($ch, CURLOPT_HEADER, 1);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-            $options = array(
-                'http' => array(
-                    'header'  => "Connection: close\r\n".
-                        "Content-type: application/json\r\n".
-                        "Content-Length: ".strlen($paramJson)."\r\n".
-                        'Cookie: JSESSIONID='.$sessId.";\r\n",
-                    'method'  => 'POST',
-                    'content' => $paramJson
-                )
-            );
+            $response = curl_exec($ch);
 
-            $context  = stream_context_create($options);
-            $queryResult = file_get_contents(Searcher::LABOURE_SERVICES_ADDR . "/search", false, $context);
+            $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            $body = substr($response, $header_size);
 
-            $searchResult = json_decode($queryResult, true);
+            curl_close($ch);
+
+            $searchResult = json_decode($body, true);
 
             if (!$searchResult) {
 
@@ -494,15 +497,11 @@ class Searcher
      */
     private function getSessionIdFromResponseHeader($http_response_header)
     {
-        foreach ($http_response_header as $h) {
+        preg_match("/JSESSIONID=\\w{32}/u", $http_response_header, $match);
 
-            if (strpos($h, "JSESSIONID") !== false) {
-                $sessId = str_replace(';path=/;HttpOnly', '', str_replace('Set-Cookie: JSESSIONID=', '', $h));
-            }
+        $result = explode("=", $match[0]);
 
-        }
-
-        return $sessId;
+        return $result[1];
     }
 
     /**
@@ -510,22 +509,30 @@ class Searcher
      */
     private function authenticateToBourseServices()
     {
-        $authQuery = http_build_query(array('username' => 'bourse', 'password' => 'bourse'));
+        $post = [
+            'username' => 'bourse',
+            'password' => 'bourse'
+        ];
 
-        $options = array(
-            'http' => array(
-                'header' => "Connection: close\r\n" .
-                    "Content-Length: " . strlen($authQuery) . "\r\n" .
-                    "Content-type: application/x-www-form-urlencoded\r\n",
-                'method' => 'POST',
-                'content' => $authQuery
-            )
-        );
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, Searcher::LABOURE_SERVICES_ADDR . '/login');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,
+            http_build_query($post));
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
 
-        $context = stream_context_create($options);
-        file_get_contents(Searcher::LABOURE_SERVICES_ADDR . "/login", false, $context);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        return $this->getSessionIdFromResponseHeader($http_response_header);
+        $response = curl_exec($ch);
+
+
+        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $header = substr($response, 0, $header_size);
+
+        curl_close($ch);
+
+        return $this->getSessionIdFromResponseHeader($header);
     }
 
 }
