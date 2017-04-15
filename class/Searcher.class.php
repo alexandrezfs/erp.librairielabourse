@@ -312,40 +312,6 @@ class Searcher
         }
     }
 
-    private function findPriceOnGibertJoseph()
-    {
-        if($this->isCodeBarre()) {
-
-            $url = 'http://www.gibertjoseph.com/sao/sao/addProduct/?isAjax=true';
-            $data = array('codes' => $this->keyword);
-
-            $options = array(
-                'timeout' => 7000,
-                'http' => array(
-                    'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-                    'method' => 'POST',
-                    'content' => http_build_query($data),
-                    'timeout' => 7000
-                )
-            );
-            $context = stream_context_create($options);
-            $result = file_get_contents($url, false, $context);
-
-            preg_match_all(Searcher::REGEX_GIBERT_JOSEPH, $result, $matches);
-
-            $price = isset($matches[1][0]) ? $matches[1][0] : null;
-
-            if ($price) {
-                $this->result .= '
-                <div class="well">
-                    <legend>Analyse de la concurrence</legend>
-                    <h5>Ce produit est racheté <span style="font-size:1.5em;">' . $price . ' € chez GIBERT JOSEPH</span>
-                    </h5>
-                </div>';
-            }
-        }
-    }
-
     private function findProduitsEncaisses()
     {
         if(!$this->isDate()) {
@@ -375,7 +341,17 @@ class Searcher
 
             $searchResult = json_decode($body, true);
 
-            if (!$searchResult) {
+            if (isset($searchResult['gibertJosephPriceResult'])) {
+
+                $this->result .= '
+                    <div class="well">
+                        <legend>Analyse de la concurrence</legend>
+                        <h5>Ce produit est racheté <span style="font-size:1.5em;">' . $searchResult['gibertJosephPriceResult']['price'] . ' € chez GIBERT JOSEPH</span>
+                        </h5>
+                    </div>';
+            }
+
+            if (!isset($searchResult['soldProducts'])) {
 
                 $this->result .= '<h5>Aucun produit vendu n\'a été trouvé !</h5>';
             }
@@ -402,7 +378,7 @@ class Searcher
 				              <tbody>
 					';
 
-                foreach ($searchResult as $row) {
+                foreach ($searchResult['soldProducts'] as $row) {
                     $this->result .= '<tr>';
                     $this->result .= '<td>#' . $row['noTransaction'] . '<br>' . $row['date'] . ' à ' . $row['heure'] . ' sur ' . $row['magasin'] . '</td>';
                     $this->result .= '<td>' . $row['prix'] . '€</td>';
