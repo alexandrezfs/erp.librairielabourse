@@ -341,7 +341,7 @@ class Searcher
 
             $searchResult = json_decode($body, true);
 
-            if (isset($searchResult['gibertJosephPriceResult'])) {
+            if (isset($searchResult['gibertJosephPriceResult']['price'])) {
 
                 $this->result .= '
                     <div class="well">
