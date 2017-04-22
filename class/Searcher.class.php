@@ -340,7 +340,7 @@ class Searcher
             curl_close($ch);
 
             $searchResult = json_decode($body, true);
-
+            
             if (isset($searchResult['gibertJosephPriceResult']['price'])) {
 
                 $this->result .= '
@@ -359,7 +359,7 @@ class Searcher
 
                 $this->result .= '<div>';
 
-                $this->result .= '<h5>Produit vendu ' . count($searchResult) . ' fois</h5>';
+                $this->result .= '<h5>Produit vendu ' . count($searchResult['soldProducts']) . ' fois</h5>';
 
                 $this->result .= '<table class="table table-striped table-bordered">
 				              <thead>
